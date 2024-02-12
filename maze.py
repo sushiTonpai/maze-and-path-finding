@@ -83,8 +83,11 @@ while True:
 
     next_cell = current_cell.walk_to_neighbour(maze=maze)
     if next_cell:
+        stack.append(current_cell)
         current_cell = next_cell
         current_cell.visited = True
+    elif not next_cell:
+        current_cell = stack.pop()
 
     pygame.display.flip()
     clock.tick(5)
