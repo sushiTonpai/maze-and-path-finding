@@ -1,3 +1,5 @@
+from typing import Union
+
 import pygame
 import sys
 
@@ -12,10 +14,9 @@ clock = pygame.time.Clock()
 
 # maze = [Cell(row, col) for row in range(ROWS) for col in range(COLS)]
 maze: list[list[Cell]] = [[Cell(row, col) for col in range(COLS)] for row in range(ROWS)]
-current_cell = maze[0][0]
-stack = [current_cell]
-current_cell.visited = True
-current_cell.in_stack = True
+current_cell: Cell = maze[0][0]
+stack: Union[list[Cell], None] = [current_cell]
+current_cell.in_stack, current_cell.visited = True, True
 
 screen.fill(BLACK)
 
@@ -26,25 +27,28 @@ while True:
             pygame.quit()
             sys.exit()
 
-    # [Cell(row, col).draw() for row in range(ROWS) for col in range(COLS)]
     current_cell.draw(screen=screen)
     print(current_cell)
 
-    next_cell, next_path = current_cell.walk_to_neighbour(maze=maze)
+    next_cell, path = current_cell.walk_to_neighbour(maze=maze)
 
     if next_cell:
         current_cell = next_cell
-        next_path.in_stack, next_path.visited = True, True
+        path.in_stack, path.visited = True, True
         current_cell.in_stack, current_cell.visited = True, True
-        # stack.append(next_path)
+        stack.append(path)
         stack.append(current_cell)
-        next_path.draw(screen=screen)
+        path.draw(screen=screen)
         current_cell.draw(screen=screen)
     elif not next_cell and stack:
         current_cell = stack.pop()
-        # next_path = stack.pop()
         current_cell.in_stack = False
         current_cell.draw(screen=screen)
+        if len(stack) > 1:
+            path = stack.pop()
+            path.in_stack = False
+            path.draw(screen=screen)
 
     pygame.display.flip()
+    # FPS
     clock.tick(10)
