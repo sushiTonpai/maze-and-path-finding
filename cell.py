@@ -32,7 +32,7 @@ class Cell:
         pygame.draw.line(screen, GREEN, (x + CELL_SIZE, y), (x + CELL_SIZE, y + CELL_SIZE), 3)
 
     # find allow neighbour cells
-    def walk_to_neighbour(self, maze: Maze) -> Union[tuple[Cell, Cell], bool]:
+    def walk_to_neighbour(self, maze: Maze) -> Union[tuple[Cell, Cell], tuple[bool,bool]]:
         x, y = self.x, self.y
         # list of walkable cells
         neighbours = {}
@@ -48,7 +48,7 @@ class Cell:
             walk_to_cell, walk_path = random.choice(list(neighbours.items()))
             return maze[walk_to_cell[0]][walk_to_cell[1]], maze[walk_path[0]][walk_path[1]]
         else:
-            return False
+            return False, False
 
 
 Maze = list[list[Cell]]
