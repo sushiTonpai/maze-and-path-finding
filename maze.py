@@ -48,6 +48,11 @@ while True:
         current_cell = stack.pop()
         current_cell.in_stack = False
         current_cell.draw(screen=screen)
+        if len(stack) > 1:
+            path = stack.pop()
+            path.in_stack = False
+            path.draw(screen=screen)
 
     pygame.display.flip()
-    clock.tick(10)
+    # FPS
+    clock.tick(30)
