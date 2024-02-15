@@ -51,4 +51,4 @@ while True:
 
     pygame.display.flip()
     # FPS
-    clock.tick(10)
+    clock.tick(30)
