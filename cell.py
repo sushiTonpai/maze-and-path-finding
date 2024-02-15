@@ -32,7 +32,7 @@ class Cell:
         # pixel position of cell = x,y
         x, y = self.x * CELL_SIZE, self.y * CELL_SIZE
         if self.visited and not self.in_stack:
-            pygame.draw.rect(screen,WHITE, (x, y, CELL_SIZE, CELL_SIZE))
+            pygame.draw.rect(screen, WHITE, (x, y, CELL_SIZE, CELL_SIZE))
         if self.in_stack and self.visited:
             pygame.draw.rect(screen, YELLOW, (x, y, CELL_SIZE, CELL_SIZE))
 
