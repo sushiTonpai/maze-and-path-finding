@@ -1,6 +1,6 @@
 # Define constants
 WIDTH, HEIGHT = 800, 800
-CELL_SIZE = 10
+CELL_SIZE = 40
 ROWS, COLS = HEIGHT // CELL_SIZE, WIDTH // CELL_SIZE
 
 # Define colors
