@@ -1,8 +1,11 @@
 from typing import Union
 
+import pygame
+
 from cell import Cell
 from constants import COLS, ROWS
-from main import screen
+
+clock = pygame.time.Clock()
 
 
 def maze_generator(screen):
@@ -34,7 +37,6 @@ def maze_generator(screen):
                 path = stack.pop()
                 path.in_stack = False
                 path.draw(screen=screen)
+        pygame.display.flip()
+        clock.tick(10)
 
-
-if __name__ == "__main__":
-    maze_generator(screen=screen)
