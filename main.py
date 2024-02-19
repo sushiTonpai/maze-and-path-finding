@@ -3,7 +3,7 @@ from typing import Union
 import pygame
 import sys
 
-from maze_generator import maze_generator
+from maze_generator import maze_visualise
 from cell import Cell
 from constants import WIDTH, HEIGHT, COLS, ROWS, BLACK
 
@@ -27,7 +27,7 @@ def main():
 
         # print(current_cell)
         if maze_generator_counter == 1:
-            maze_generator(screen=screen)
+            maze_visualise(screen=screen)
             maze_generator_counter += 1
         # pygame.display.flip()
         # FPS

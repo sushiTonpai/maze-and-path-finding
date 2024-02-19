@@ -8,7 +8,7 @@ from constants import COLS, ROWS
 clock = pygame.time.Clock()
 
 
-def maze_generator(screen):
+def maze_visualise(screen):
     maze: list[list[Cell]] = [[Cell(row, col) for col in range(COLS)] for row in range(ROWS)]
     stack: Union[list[Cell], None] = [maze[0][0]]
     current_cell: Cell = maze[0][0]
