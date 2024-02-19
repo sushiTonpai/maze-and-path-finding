@@ -31,19 +31,23 @@ class Cell:
     def draw(self, screen):
         # pixel position of cell = x,y
         x, y = self.x * CELL_SIZE, self.y * CELL_SIZE
+
         if self.visited and not self.in_stack:
             pygame.draw.rect(screen, WHITE, (x, y, CELL_SIZE, CELL_SIZE))
         if self.in_stack and self.visited:
             pygame.draw.rect(screen, YELLOW, (x, y, CELL_SIZE, CELL_SIZE))
         if not self.visited:
+            """
+            draw walls with thickness of 10% of cell size
+            """
             # TOP WALL
-            pygame.draw.line(screen, GREEN, (x, y), (x + CELL_SIZE, y), 3)
+            pygame.draw.line(screen, GREEN, (x, y), (x + CELL_SIZE, y), int(1/10 * CELL_SIZE))
             # BOTTOM WALL
-            pygame.draw.line(screen, GREEN, (x, y + CELL_SIZE), (x + CELL_SIZE, y + CELL_SIZE), 3)
+            pygame.draw.line(screen, GREEN, (x, y + CELL_SIZE), (x + CELL_SIZE, y + CELL_SIZE), int(1/10 * CELL_SIZE))
             # LEFT WALL
-            pygame.draw.line(screen, GREEN, (x, y), (x, y + CELL_SIZE), 3)
+            pygame.draw.line(screen, GREEN, (x, y), (x, y + CELL_SIZE), int(1/10 * CELL_SIZE))
             # RIGHT WALL
-            pygame.draw.line(screen, GREEN, (x + CELL_SIZE, y), (x + CELL_SIZE, y + CELL_SIZE), 3)
+            pygame.draw.line(screen, GREEN, (x + CELL_SIZE, y), (x + CELL_SIZE, y + CELL_SIZE), int(1/10 * CELL_SIZE))
 
     # find allow neighbour cells
     def walk_to_neighbour(self, maze: Maze) -> Union[tuple[Cell, Cell], tuple[bool, bool]]:
