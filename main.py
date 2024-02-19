@@ -18,7 +18,6 @@ def main():
 
     # generate maze
     maze = maze_generator()
-    print(maze)
 
     # Main game loop
     while True:
