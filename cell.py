@@ -35,15 +35,15 @@ class Cell:
             pygame.draw.rect(screen, WHITE, (x, y, CELL_SIZE, CELL_SIZE))
         if self.in_stack and self.visited:
             pygame.draw.rect(screen, YELLOW, (x, y, CELL_SIZE, CELL_SIZE))
-
-        # TOP WALL
-        pygame.draw.line(screen, GREEN, (x, y), (x + CELL_SIZE, y), 3)
-        # BOTTOM WALL
-        pygame.draw.line(screen, GREEN, (x, y + CELL_SIZE), (x + CELL_SIZE, y + CELL_SIZE), 3)
-        # LEFT WALL
-        pygame.draw.line(screen, GREEN, (x, y), (x, y + CELL_SIZE), 3)
-        # RIGHT WALL
-        pygame.draw.line(screen, GREEN, (x + CELL_SIZE, y), (x + CELL_SIZE, y + CELL_SIZE), 3)
+        if not self.visited:
+            # TOP WALL
+            pygame.draw.line(screen, GREEN, (x, y), (x + CELL_SIZE, y), 3)
+            # BOTTOM WALL
+            pygame.draw.line(screen, GREEN, (x, y + CELL_SIZE), (x + CELL_SIZE, y + CELL_SIZE), 3)
+            # LEFT WALL
+            pygame.draw.line(screen, GREEN, (x, y), (x, y + CELL_SIZE), 3)
+            # RIGHT WALL
+            pygame.draw.line(screen, GREEN, (x + CELL_SIZE, y), (x + CELL_SIZE, y + CELL_SIZE), 3)
 
     # find allow neighbour cells
     def walk_to_neighbour(self, maze: Maze) -> Union[tuple[Cell, Cell], tuple[bool, bool]]:

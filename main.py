@@ -17,7 +17,7 @@ def main():
     screen.fill(BLACK)
 
     maze = maze_generator()
-
+    print(maze)
     # Main game loop
     while True:
         for event in pygame.event.get():
@@ -28,7 +28,7 @@ def main():
         # print(current_cell)
 
         [[cells.draw(screen) for cells in maze[i]] for i in range(ROWS)]
-        # pygame.display.flip()
+        pygame.display.flip()
         # FPS
         clock.tick(30)
 
