@@ -16,14 +16,21 @@ def main():
     clock = pygame.time.Clock()
     screen.fill(BLACK)
 
+    # generate maze
     maze = maze_generator()
     print(maze)
+
     # Main game loop
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                # regenerate maze when press r
+                maze = maze_generator()
+                # clear screen
+                screen.fill(BLACK)
 
         # print(current_cell)
 
