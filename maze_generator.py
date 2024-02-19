@@ -46,6 +46,7 @@ def maze_visualise(screen):
         clock.tick(10)
     [[cell.draw(screen=screen) for cell in maze[i]] for i in range(ROWS)]
     pygame.display.flip()
+    return maze
 
 
 def maze_generator():
