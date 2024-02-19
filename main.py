@@ -16,7 +16,7 @@ def main():
     clock = pygame.time.Clock()
     screen.fill(BLACK)
 
-    maze_generator_counter = 1
+    maze = maze_generator()
 
     # Main game loop
     while True:
@@ -26,9 +26,8 @@ def main():
                 sys.exit()
 
         # print(current_cell)
-        if maze_generator_counter == 1:
-            maze_generator(screen=screen)
-            maze_generator_counter += 1
+
+        [[cells.draw(screen) for cells in maze[i]] for i in range(ROWS)]
         # pygame.display.flip()
         # FPS
         clock.tick(30)
