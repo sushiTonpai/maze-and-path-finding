@@ -16,31 +16,6 @@ def maze_init():
     return maze, stack, current_cell
 
 
-def maze_generator():
-    maze, stack, current_cell = maze_init()
-    """
-    if there is next cell we put nex cell and path taken in stack,
-    update in_stack and visited of the next cell and path taken = True then draw cells
-    if there is no next cell we roll back the visited cells in stack. and draw cells
-    """
-    while stack:
-        next_cell, path = current_cell.walk_to_neighbour(maze=maze)
-        if next_cell:
-            current_cell = next_cell
-            path.in_stack, path.visited = True, True
-            current_cell.in_stack, current_cell.visited = True, True
-            stack.append(path)
-            stack.append(current_cell)
-        elif not next_cell and stack:
-            current_cell = stack.pop()
-            current_cell.in_stack = False
-            if len(stack) > 1:
-                path = stack.pop()
-                path.in_stack = False
-
-    return maze
-
-
 def maze_visualise(screen):
     maze, stack, current_cell = maze_init()
     current_cell.draw(screen=screen)
@@ -71,3 +46,26 @@ def maze_visualise(screen):
         clock.tick(10)
     [[cell.draw(screen=screen) for cell in maze[i]] for i in range(ROWS)]
     pygame.display.flip()
+
+
+def maze_generator():
+    maze, stack, current_cell = maze_init()
+    """
+    same logic as maze_generator, but dose not draw cells
+    """
+    while stack:
+        next_cell, path = current_cell.walk_to_neighbour(maze=maze)
+        if next_cell:
+            current_cell = next_cell
+            path.in_stack, path.visited = True, True
+            current_cell.in_stack, current_cell.visited = True, True
+            stack.append(path)
+            stack.append(current_cell)
+        elif not next_cell and stack:
+            current_cell = stack.pop()
+            current_cell.in_stack = False
+            if len(stack) > 1:
+                path = stack.pop()
+                path.in_stack = False
+
+    return maze
