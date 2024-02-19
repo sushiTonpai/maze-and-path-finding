@@ -39,4 +39,6 @@ def maze_generator(screen):
                 path.draw(screen=screen)
         pygame.display.flip()
         clock.tick(10)
+    [[cell.draw(screen=screen) for cell in maze[i]] for i in range(ROWS)]
+    pygame.display.flip()
 
