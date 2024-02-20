@@ -50,6 +50,7 @@ while True:
             sys.exit()
 
     screen.fill(BLACK)
+    print('blacked')
 
     for row in range(ROWS):
         for col in range(COLS):
