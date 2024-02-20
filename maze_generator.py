@@ -3,12 +3,14 @@ from typing import Union
 import pygame
 
 from cell import Cell
-from constants import COLS, ROWS
-
-clock = pygame.time.Clock()
+from constants import COLS, ROWS, clock
 
 
 def maze_init():
+    """
+    Initializes the Maze with starting current cell at maze[0][0] and empty stack
+    :return: maze: Maze, stack: List, current cell: Cell
+    """
     maze: list[list[Cell]] = [[Cell(row, col) for col in range(COLS)] for row in range(ROWS)]
     stack: Union[list[Cell], None] = [maze[0][0]]
     current_cell: Cell = maze[0][0]
@@ -50,10 +52,10 @@ def maze_visualise(screen):
 
 
 def maze_generator():
-    maze, stack, current_cell = maze_init()
     """
     same logic as maze_generator, but dose not draw cells
     """
+    maze, stack, current_cell = maze_init()
     while stack:
         next_cell, path = current_cell.walk_to_neighbour(maze=maze)
         if next_cell:
