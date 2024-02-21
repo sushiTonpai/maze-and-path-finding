@@ -62,9 +62,8 @@ class Cell:
             """
             pygame.draw.circle(screen, RED, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
 
-
-        # find allow neighbour cells
-    def walk_to_neighbour(self, maze: Maze) -> Union[tuple[Cell, Cell], tuple[bool, bool]]:
+    # find allow neighbour cells
+    def walk_to_neighbour(self, maze: MazeType) -> Union[tuple[Cell, Cell], tuple[bool, bool]]:
         """
                 neighbour is dict contain key of walkable call with value of path taken then choose randomly in neighbour
                 dict
@@ -93,7 +92,7 @@ class Cell:
             return False, False
 
 
-def get_start_end(maze: Maze):
+def get_start_end(maze: MazeType):
     lst_of_visited = []
     for row in range(ROWS):
         for col in range(COLS):
@@ -106,4 +105,4 @@ def get_start_end(maze: Maze):
 
 
 # Type annotation
-Maze = list[list[Cell]]
+MazeType = list[list[Cell]]

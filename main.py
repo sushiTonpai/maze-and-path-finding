@@ -5,7 +5,7 @@ from constants import WIDTH, HEIGHT, COLS, ROWS, BLACK, clock
 
 
 def main(
-        Maze_visualization_enable=False,
+        maze_visualization_enable=False,
         start_point=False,
         end_point=False,
         generating=True,
@@ -22,7 +22,7 @@ def main(
         generating=generating,
         start_point=start_point,
         end_point=end_point,
-        maze_visualization_enable=Maze_visualization_enable,
+        maze_visualization_enable=maze_visualization_enable,
     )
 
     # Main game loop
@@ -36,4 +36,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main()
+    main(maze_visualization_enable=True)

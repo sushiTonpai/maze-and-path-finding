@@ -3,11 +3,17 @@ from typing import Union, Tuple
 import pygame
 from pygame import Surface
 
-from cell import Cell, Maze
+from cell import Cell, MazeType
 from constants import COLS, ROWS, clock
 
 
-def maze_init() -> Tuple[Maze, list[Cell], Cell]:
+class Maze:
+    """
+    Maze class with class methods
+    """
+
+
+def maze_init() -> Tuple[MazeType, list[Cell], Cell]:
     """
     Initializes the Maze with starting current cell at maze[0][0] and empty stack
     :return: maze: Maze, stack: List, current cell: Cell
@@ -51,7 +57,7 @@ def maze_visualise(screen: Surface):
     return maze
 
 
-def maze_generator() -> Maze:
+def maze_generator() -> MazeType:
     """
     same logic as maze_generator, but dose not draw cells
     """
