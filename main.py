@@ -1,61 +1,36 @@
 import pygame
-import sys
-
-from cell import get_start_end
-from maze_generator import maze_generator, maze_visualise
+from maze_and_path_runner import MazeAndPathRunner
+from maze import maze_generator
 from constants import WIDTH, HEIGHT, COLS, ROWS, BLACK, clock
 
-Maze_visualization_enable = False
-start_point = False
-end_point = False
-generating = True
 
-
-def main():
+def main(
+        Maze_visualization_enable=False,
+        start_point=False,
+        end_point=False,
+        generating=True,
+):
     # Initialize Pygame
-    global Maze_visualization_enable, start_point, end_point, generating
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Maze")
     screen.fill(BLACK)
 
-    # generate maze
-    maze = maze_generator()
+    maze_and_path = MazeAndPathRunner(
+        screen=screen,
+        maze=maze_generator(),  # generate maze
+        generating=generating,
+        start_point=start_point,
+        end_point=end_point,
+        maze_visualization_enable=Maze_visualization_enable,
+    )
 
     # Main game loop
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                # clear screen
-                screen.fill(BLACK)
-                # regenerate maze when press r
-                maze = maze_generator()
-                generating = True
-                start_point = False
-                end_point = False
-
-        if generating:
-            if Maze_visualization_enable:
-                maze = maze_visualise(screen)
-                Maze_visualization_enable = False
-            else:
-                [[cells.draw(screen) for cells in maze[i]] for i in range(ROWS)]
-                print("Maze visualised successfully")
-                pygame.display.flip()
-            generating = False
-
-        if not start_point and not end_point:
-            start, end = get_start_end(maze)
-            start.is_start = True
-            end.is_end = True
-            start_point, end_point = True, True
-            start.draw(screen=screen)
-            end.draw(screen=screen)
-            pygame.display.flip()
-            print(start, end)
+        events = pygame.event.get()
+        maze_and_path.events_handler(events=events)
+        maze_and_path.visualize_maze()
+        maze_and_path.place_start_end()
         # FPS
         clock.tick(30)
 
