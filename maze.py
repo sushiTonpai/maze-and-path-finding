@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Union, Tuple
 
 import pygame
@@ -7,26 +8,28 @@ from cell import Cell, MazeType
 from constants import COLS, ROWS, clock
 
 
+@dataclass
 class Maze:
-    """
-    Maze class with class methods
-    """
+    maze: list[list[Cell]]
+    stack: Union[list[Cell], None]
+    current_cell: Cell
 
-
-def maze_init() -> Tuple[MazeType, list[Cell], Cell]:
-    """
-    Initializes the Maze with starting current cell at maze[0][0] and empty stack
-    :return: maze: Maze, stack: List, current cell: Cell
-    """
-    maze: list[list[Cell]] = [[Cell(row, col) for col in range(COLS)] for row in range(ROWS)]
-    stack: Union[list[Cell], None] = [maze[0][0]]
-    current_cell: Cell = maze[0][0]
-    current_cell.visited, current_cell.in_stack = True, True
-    return maze, stack, current_cell
+    @classmethod
+    def maze_init(cls) -> 'Maze':
+        maze = [[Cell(row, col) for col in range(COLS)] for row in range(ROWS)]
+        current_cell = maze[0][0]
+        stack = [current_cell]
+        current_cell.visited, current_cell.in_stack = True, True
+        return cls(maze=maze,
+                   stack=stack,
+                   current_cell=current_cell)
 
 
 def maze_visualise(screen: Surface):
-    maze, stack, current_cell = maze_init()
+    my_maze = Maze.maze_init()
+    maze = my_maze.maze
+    current_cell = my_maze.current_cell
+    stack = my_maze.stack
     current_cell.draw(screen=screen)
     while stack:
         next_cell, path = current_cell.walk_to_neighbour(maze=maze)
@@ -52,7 +55,7 @@ def maze_visualise(screen: Surface):
                 path.in_stack = False
                 path.draw(screen=screen)
         pygame.display.flip()
-        clock.tick(10)
+        clock.tick(20)
     [[cell.draw(screen=screen) for cell in maze[i]] for i in range(ROWS)]
     return maze
 
@@ -61,7 +64,11 @@ def maze_generator() -> MazeType:
     """
     same logic as maze_generator, but dose not draw cells
     """
-    maze, stack, current_cell = maze_init()
+    my_maze = Maze.maze_init()
+    maze = my_maze.maze
+    current_cell = my_maze.current_cell
+    stack = my_maze.stack
+
     while stack:
         next_cell, path = current_cell.walk_to_neighbour(maze=maze)
         if next_cell:
