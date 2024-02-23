@@ -1,11 +1,11 @@
 import pygame
 from maze_and_path_runner import MazeAndPathRunner
-from maze import maze_generator
+from maze import Maze
 from constants import WIDTH, HEIGHT, COLS, ROWS, BLACK, clock
 
 
 def main(
-        Maze_visualization_enable=False,
+        maze_visualization_enable=False,
         start_point=False,
         end_point=False,
         generating=True,
@@ -18,11 +18,11 @@ def main(
 
     maze_and_path = MazeAndPathRunner(
         screen=screen,
-        maze=maze_generator(),  # generate maze
+        maze_grid=Maze.maze_generator(),  # generate maze
         generating=generating,
         start_point=start_point,
         end_point=end_point,
-        maze_visualization_enable=Maze_visualization_enable,
+        maze_visualization_enable=maze_visualization_enable,
     )
 
     # Main game loop
@@ -36,4 +36,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main()
+    main(maze_visualization_enable=True)
