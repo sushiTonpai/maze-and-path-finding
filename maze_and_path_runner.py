@@ -42,7 +42,7 @@ class MazeAndPathRunner:
                 self.maze_visualization_enable = False
             else:
                 [[cells.draw(self.screen) for cells in self.maze_grid[i]] for i in range(ROWS)]
-                print("Maze visualised successfully")
+            print("Maze generated successfully")
             pygame.display.flip()
             self.generating = False
 
@@ -56,4 +56,3 @@ class MazeAndPathRunner:
             start.draw(screen=self.screen)
             end.draw(screen=self.screen)
             pygame.display.flip()
-            print(start, end)
