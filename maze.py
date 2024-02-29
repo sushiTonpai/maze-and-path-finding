@@ -82,3 +82,9 @@ class Maze:
                     path.in_stack = False
 
         return maze
+
+
+if __name__ == "__main__":
+    tester_maze = Maze.maze_init()
+    tester_maze_grid = tester_maze.maze_grid[0]
+    print(tester_maze_grid)
