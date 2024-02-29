@@ -1,10 +1,11 @@
+from __future__ import annotations
 from dataclasses import dataclass
 
 from cell import Cell, MazeType
 
 
 @dataclass
-class Astar:
+class Node:
     """
     A* algorithm F(n) = G(n) + H(n) where n is Cell
     F(n) represents the total cost of that node
@@ -13,9 +14,21 @@ class Astar:
     H(n) distance calculate by manhattan distance -> abs(current.x - goal.x) + abs(current.y - goal.y)
 
     """
-    distance_cost: int
+    g_cost: int
     h_cost: int
-    total_cost: int
+    parents: Cell
+    start: Cell
+    goal: Cell
+
+    def f_cost(self):
+        return self.g_cost + self.h_cost
+
+    @classmethod
+    def get_distance(cls) -> int:  # distance from current node to neighbour node
+        return 1
+
+    def cost_to_node(self, neighbour: Node) -> int:  # calculate G(n) cost
+        return self.g_cost + neighbour.get_distance()
 
 
 def walkable_path(cell, maze) -> list[Cell] or bool:
@@ -29,9 +42,5 @@ def walkable_path(cell, maze) -> list[Cell] or bool:
     return neighbours if neighbours else False
 
 
-def distance_to_node(start: Cell, current: Cell, maze: MazeType) -> int:  # calculate G(n) cost
-    return 1
-
-
-def estimate_cost(goal: Cell, current: Cell, maze: MazeType) -> int:    # calculate heuristic cost
+def estimate_cost(goal: Cell, current: Cell) -> int:  # calculate heuristic cost
     return abs(goal.x - current.x) + abs(goal.y - current.x)

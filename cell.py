@@ -28,7 +28,7 @@ class Cell:
     visited: bool = False
     in_stack: bool = False
     is_start: bool = False
-    is_end: bool = False
+    is_goal: bool = False
 
     def draw(self, screen):
         # pixel position of cell = x,y
@@ -56,7 +56,7 @@ class Cell:
             """
             pygame.draw.circle(screen, BLUE, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
 
-        if self.visited and self.is_end:
+        if self.visited and self.is_goal:
             """
             draw red circle at starting point
             """

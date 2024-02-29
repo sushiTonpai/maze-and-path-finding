@@ -50,7 +50,7 @@ class MazeAndPathRunner:
         if not self.start_point and not self.end_point:
             start, end = get_start_end(self.maze_grid)
             start.is_start = True
-            end.is_end = True
+            end.is_goal = True
             self.start_point = True
             self.end_point = True
             start.draw(screen=self.screen)
