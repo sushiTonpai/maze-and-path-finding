@@ -26,7 +26,7 @@ class Cell:
     x: int
     y: int
     visited: bool = False
-    in_stack: bool = False
+    searching: bool = False
     is_start: bool = False
     is_goal: bool = False
 
@@ -34,9 +34,9 @@ class Cell:
         # pixel position of cell = x,y
         x, y = self.x * CELL_SIZE, self.y * CELL_SIZE
 
-        if self.visited and not self.in_stack:
+        if self.visited:
             pygame.draw.rect(screen, WHITE, (x, y, CELL_SIZE, CELL_SIZE))
-        if self.in_stack and self.visited:
+        if self.searching and self.visited:
             pygame.draw.rect(screen, YELLOW, (x, y, CELL_SIZE, CELL_SIZE))
         if not self.visited:
             """
@@ -86,12 +86,16 @@ class Cell:
 
         return neighbors
 
-    def move(self, directions: list[str], maze: MazeType) -> list[Cell]:
+    def move(self, directions: list[str], maze: MazeType) -> list[Cell] or bool:
         """
         return a list of cell representing new cell and path taken
         where return list[0] = new cell and list[1] = new path
+        function return False if directions is empty
         """
-        move_direction = random.choice(directions)
+        if len(directions) > 0:
+            move_direction = random.choice(directions)
+        else:
+            return False
 
         def move_helper(dx, dy):
             return [maze[self.x + dx][self.y + dy], maze[self.x + dx // 2][self.y + dy // 2]]
