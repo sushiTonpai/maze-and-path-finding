@@ -63,6 +63,47 @@ class Cell:
             pygame.draw.circle(screen, RED, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
 
     # find allow neighbour cells
+    def neighbours_directions(self, maze: MazeType) -> list[str]:
+        """
+        return a list of all visitable neighbors in four directions north, south, east, west
+        """
+        x, y = self.x, self.y
+        neighbors = []
+
+        def add_neighbour(dx, dy, direction):
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < COLS and 0 <= ny < ROWS and not maze[nx][ny].visited:
+                neighbors.append(direction)
+
+        # north check
+        add_neighbour(0, 2, 'north')
+        # south check
+        add_neighbour(0, -2, 'south')
+        # east check
+        add_neighbour(2, 0, 'east')
+        # west check
+        add_neighbour(-2, 0, 'west')
+
+        return neighbors
+
+    def move(self, directions: list[str], maze: MazeType) -> list[Cell]:
+        """
+        return a list of cell representing new cell and path taken
+        """
+        move_direction = random.choice(directions)
+
+        def move_helper(dx, dy):
+            return [maze[self.x + dx][self.y + dy], maze[self.x + dx // 2][self.y + dy // 2]]
+
+        if move_direction == 'north':
+            return move_helper(0, 2)
+        if move_direction == 'south':
+            return move_helper(0, -2)
+        if move_direction == 'east':
+            return move_helper(2, 0)
+        if move_direction == 'west':
+            return move_helper(-2, 0)
+
     def walk_to_neighbour(self, maze: MazeType) -> Union[tuple[Cell, Cell], tuple[bool, bool]]:
 
         """
