@@ -76,9 +76,9 @@ class Cell:
                 neighbors.append(direction)
 
         # north check
-        add_neighbour(0, 2, 'north')
+        add_neighbour(0, -2, 'north')
         # south check
-        add_neighbour(0, -2, 'south')
+        add_neighbour(0, 2, 'south')
         # east check
         add_neighbour(2, 0, 'east')
         # west check
@@ -89,6 +89,7 @@ class Cell:
     def move(self, directions: list[str], maze: MazeType) -> list[Cell]:
         """
         return a list of cell representing new cell and path taken
+        where return list[0] = new cell and list[1] = new path
         """
         move_direction = random.choice(directions)
 
@@ -96,9 +97,9 @@ class Cell:
             return [maze[self.x + dx][self.y + dy], maze[self.x + dx // 2][self.y + dy // 2]]
 
         if move_direction == 'north':
-            return move_helper(0, 2)
-        if move_direction == 'south':
             return move_helper(0, -2)
+        if move_direction == 'south':
+            return move_helper(0, 2)
         if move_direction == 'east':
             return move_helper(2, 0)
         if move_direction == 'west':
