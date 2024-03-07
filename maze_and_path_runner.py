@@ -5,7 +5,8 @@ import pygame
 from pygame import Surface
 from pygame.event import Event
 
-from cell import Cell, get_start_end, MazeType
+from Astar import Node
+from cell import get_start_end, MazeType
 from constants import BLACK, ROWS
 from maze import Maze
 
@@ -48,11 +49,13 @@ class MazeAndPathRunner:
 
     def place_start_end(self):
         if not self.start_point and not self.end_point:
-            start, end = get_start_end(self.maze_grid)
-            start.is_start = True
-            end.is_end = True
+            begin, end = get_start_end(self.maze_grid)
+            begin.is_start = True
+            Node.start_node = begin
+            end.is_goal = True
+            Node.goal_node = end
             self.start_point = True
             self.end_point = True
-            start.draw(screen=self.screen)
+            begin.draw(screen=self.screen)
             end.draw(screen=self.screen)
             pygame.display.flip()
