@@ -66,19 +66,16 @@ class Maze:
         stack = my_maze.stack
         print('non-visualized maze generator')
         while stack:
-            next_cell, path = current_cell.walk_to_neighbour(maze=maze)
-            if next_cell:
-                current_cell = next_cell
-                path.searching, path.visited = True, True
-                current_cell.searching, current_cell.visited = True, True
-                stack.append(path)
+            directions = current_cell.neighbours_directions(maze=maze)
+            next_cells = current_cell.move(directions=directions, maze=maze)
+            # next_cell, path = current_cell.walk_to_neighbour(maze=maze)
+            if next_cells:
+                for cell in reversed(next_cells):
+                    cell.visited = True
+                current_cell = next_cells[0]
                 stack.append(current_cell)
-            elif not next_cell and stack:
+            elif not next_cells and stack:
                 current_cell = stack.pop()
-                current_cell.searching = False
-                if len(stack) > 1:
-                    path = stack.pop()
-                    path.searching = False
 
         return maze
 
