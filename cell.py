@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Union
 from constants import CELL_SIZE, WHITE, YELLOW, GREEN, ROWS, COLS, BLUE, RED
 
@@ -23,6 +23,17 @@ walk_to_neighbor is function that return walkable cell with path taken
 
 @dataclass
 class Cell:
+    """
+    Cell class represents cell in maze
+
+    Attributes:
+        x (int): x coordinate of the cell
+        y (int): y coordinate of the cell
+        visited (bool): whether cell is visited or not
+        searching (bool): whether cell is searching/ most front cell
+        is_start (bool): whether cell is starting cell
+        is_goal (bool): whether cell is end goal cell
+    """
     x: int
     y: int
     visited: bool = False

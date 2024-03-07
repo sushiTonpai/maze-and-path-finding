@@ -5,7 +5,7 @@ import pygame
 from pygame import Surface
 from pygame.event import Event
 
-from Astar import Node
+from node import Node
 from cell import get_start_end, MazeType
 from constants import BLACK, ROWS
 from maze import Maze
