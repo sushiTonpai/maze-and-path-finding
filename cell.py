@@ -110,36 +110,6 @@ class Cell:
             case 'west':
                 return move_helper(-2, 0)
 
-    def walk_to_neighbour(self, maze: MazeType) -> Union[tuple[Cell, Cell], tuple[bool, bool]]:
-
-        """
-                neighbour is dict contain key of walkable call with value of path taken then choose randomly in neighbour
-                dict
-                return walk_to_cell = Cell or False if nothing in neighbour dict , walk_path = Cell or False if nothing
-                in neighbour dict
-                :param maze:
-                """
-        x, y = self.x, self.y
-        # dict of walkable cells
-        neighbours = {}
-        # adjacent cell
-        for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-            # new path and cell in direction of dx and dy
-            new_path = (x + dx, y + dy)
-            new_cell = (x + dx * 2, y + dy * 2)
-            # out of bound check and Cell is visited
-            if 0 <= new_cell[0] < COLS and 0 <= new_cell[1] < ROWS:
-                if not maze[new_cell[0]][new_cell[1]].visited:
-                    # print('visiting = ', new_cell, maze[new_cell[0]][new_cell[1]])
-                    neighbours.update({new_cell: new_path})
-        # check item in neighbours if not return False
-        if neighbours:
-            print(neighbours)
-            walk_to_cell, walk_path = random.choice(list(neighbours.items()))
-            return maze[walk_to_cell[0]][walk_to_cell[1]], maze[walk_path[0]][walk_path[1]]
-        else:
-            return False, False
-
 
 def get_start_end(maze: MazeType):
     lst_of_visited = []
