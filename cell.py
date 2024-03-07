@@ -100,14 +100,15 @@ class Cell:
         def move_helper(dx, dy):
             return [maze[self.x + dx][self.y + dy], maze[self.x + dx // 2][self.y + dy // 2]]
 
-        if move_direction == 'north':
-            return move_helper(0, -2)
-        if move_direction == 'south':
-            return move_helper(0, 2)
-        if move_direction == 'east':
-            return move_helper(2, 0)
-        if move_direction == 'west':
-            return move_helper(-2, 0)
+        match move_direction:
+            case 'north':
+                return move_helper(0, -2)
+            case 'south':
+                return move_helper(0, 2)
+            case 'east':
+                return move_helper(2, 0)
+            case 'west':
+                return move_helper(-2, 0)
 
     def walk_to_neighbour(self, maze: MazeType) -> Union[tuple[Cell, Cell], tuple[bool, bool]]:
 
