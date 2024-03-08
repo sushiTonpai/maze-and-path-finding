@@ -20,9 +20,9 @@ class Node:
     node_y: int
     parents: Node = None
     is_wall: bool = False
-    g_cost: int = 0
-    h_cost: int = 0
-    f_cost: int = 0
+    g_cost: int = 99999
+    h_cost: int = 99999
+    f_cost: int = 99999
 
     @classmethod
     def cell_to_node(cls, cell: Cell) -> Node:
@@ -34,18 +34,6 @@ class Node:
     def calculate_cost(self):
         return self.h_cost + self.g_cost
 
-    def cost_to_node(self, weight: int = 1) -> int:  # calculate G(n) cost
-        return self.g_cost + weight
-
-    def walkable_path(self) -> list[Cell] or bool:
-        neighbours = []
-        # 4 direction [(west)(east)(north)(south)]
-        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-            cell_neighbour = self.node_x + dx, self.node_y + dy
-            if 0 <= cell_neighbour[0] < COLS and 0 <= cell_neighbour[1] < ROWS:  # out of bound check
-                if not self.is_wall:  # not a wall check
-                    neighbours.append(cell_neighbour)
-        return neighbours
-
     def estimate_cost(self, target: Node):  # calculate heuristic cost
         self.h_cost = abs(target.node_x - self.node_x) + abs(target.node_y - self.node_y)
+
