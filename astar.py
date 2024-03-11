@@ -1,15 +1,14 @@
 import heapq
 from dataclasses import dataclass
-from random import random
 
 from constants import COLS, ROWS
 from maze import Maze
-from node import Node, get_start_end
+from node import Node, get_start_end, NodeType
 
 
 @dataclass
 class Astar:
-    node_grid: list[list[Node]]
+    node_grid: NodeType
     start_node: Node
     goal_node: Node
 
@@ -34,15 +33,16 @@ class Astar:
         Perform the A* search algorithm to find the path from start to goal nodes.
         """
         open_list = []
-        searched_list = set()
+        searched_list = []
         # Start the search from the starting node, open_list is a priority queue
         heapq.heappush(open_list, self.start_node)
         while len(open_list) > 0:
             current_node = heapq.heappop(open_list)
-            searched_list.add(current_node)
+            searched_list. append(current_node)
 
             # If the goal is reached, return the constructed path
-            self.check_goal_reached(current_node)
+            if current_node == self.goal_node:
+                return self.get_path()
 
             neighbours = self.walkable_neighbours(current_node=current_node)
 
@@ -59,12 +59,10 @@ class Astar:
                 # Skip neighbours that have already been processed
                 if neighbour in searched_list:
                     continue
-
-                else:
-                    new_g = current_node.g_cost + 1
-                    # Update the neighbour's cost if the new cost is lower or if it's not in open_list
-                    if new_g < neighbour.g_cost or neighbour not in open_list:
-                        update_neighbour(current_node, neighbour, new_g)
+                new_g = current_node.g_cost + 1
+                # Update the neighbour's cost if the new cost is lower or if it's not in open_list
+                if new_g < neighbour.g_cost or neighbour not in open_list:
+                    update_neighbour(current_node, neighbour, new_g)
 
         # return empty list if function cannot reach goal node
         return []
@@ -95,11 +93,6 @@ class Astar:
             path.insert(0, current_node)
             current_node = current_node.parent
         return path
-
-    def check_goal_reached(self, current_node: Node) -> list[Node]:
-        if current_node == self.goal_node:
-            return self.get_path()
-        return []
 
 
 if __name__ == "__main__":

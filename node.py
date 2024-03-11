@@ -52,3 +52,6 @@ def get_start_end(nodes: list[list[Node]]) -> tuple[Node,Node]:
     not_walls.remove(start)
     end = random.choice(not_walls)
     return start, end
+
+
+NodeType = list[list[Node]]
