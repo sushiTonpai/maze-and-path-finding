@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, asdict
 import random
+from typing import Optional
 
 from cell import Cell, MazeType
 from constants import COLS, ROWS
@@ -19,7 +20,7 @@ class Node:
 
     node_x: int
     node_y: int
-    parents: Node = None
+    parents:Optional[Node]= None
     is_wall: bool = False
     g_cost: float = float('inf')
     h_cost: int = 0
