@@ -1,9 +1,9 @@
 from __future__ import annotations
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 import random
 from typing import Optional
 
-from cell import Cell, MazeType
+from cell import Cell
 from constants import COLS, ROWS
 
 
