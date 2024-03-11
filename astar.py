@@ -34,36 +34,37 @@ class Astar:
         Perform the A* search algorithm to find the path from start to goal nodes.
         """
         open_list = []
-        searched_list = []
+        searched_list = set()
         # Start the search from the starting node, open_list is a priority queue
         heapq.heappush(open_list, self.start_node)
-        while open_list:
+        while len(open_list) > 0:
             current_node = heapq.heappop(open_list)
-            searched_list.append(current_node)
+            searched_list.add(current_node)
 
-            if current_node == self.goal_node:
-                # If the goal is reached, return the constructed path
-                return self.get_path()
+            # If the goal is reached, return the constructed path
+            self.check_goal_reached(current_node)
 
             neighbours = self.walkable_neighbours(current_node=current_node)
+
+            def update_neighbour(current: Node, neighbour: Node, g_cost: float) -> None:
+                neighbour.g_cost = g_cost
+                neighbour.h_cost = neighbour.estimate_cost(target=self.goal_node)
+                neighbour.f_cost = neighbour.calculate_cost()
+                neighbour.parent = current
+                # Add neighbour to open_list if not already present
+                if neighbour not in open_list:
+                    heapq.heappush(open_list, neighbour)
 
             for neighbour in neighbours:
                 # Skip neighbours that have already been processed
                 if neighbour in searched_list:
                     continue
 
-                if neighbour not in searched_list:
+                else:
                     new_g = current_node.g_cost + 1
                     # Update the neighbour's cost if the new cost is lower or if it's not in open_list
                     if new_g < neighbour.g_cost or neighbour not in open_list:
-                        neighbour.g_cost = new_g
-                        neighbour.h_cost = neighbour.estimate_cost(target=self.goal_node)
-                        neighbour.f_cost = neighbour.calculate_cost()
-                        neighbour.parent = current_node
-
-                # Add neighbour to open_list if not already present
-                if neighbour not in open_list:
-                    heapq.heappush(open_list, neighbour)
+                        update_neighbour(current_node, neighbour, new_g)
 
         # return empty list if function cannot reach goal node
         return []
@@ -94,6 +95,11 @@ class Astar:
             path.insert(0, current_node)
             current_node = current_node.parent
         return path
+
+    def check_goal_reached(self, current_node: Node) -> list[Node]:
+        if current_node == self.goal_node:
+            return self.get_path()
+        return []
 
 
 if __name__ == "__main__":
