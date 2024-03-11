@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, asdict
+import random
 
 from cell import Cell, MazeType
 from constants import COLS, ROWS
@@ -20,9 +21,9 @@ class Node:
     node_y: int
     parents: Node = None
     is_wall: bool = False
-    g_cost: int = 99999
-    h_cost: int = 99999
-    f_cost: int = 99999
+    g_cost: float = float('inf')
+    h_cost: int = 0
+    f_cost: float = float('inf')
 
     @classmethod
     def cell_to_node(cls, cell: Cell) -> Node:
@@ -34,6 +35,20 @@ class Node:
     def calculate_cost(self):
         return self.h_cost + self.g_cost
 
-    def estimate_cost(self, target: Node):  # calculate heuristic cost
-        self.h_cost = abs(target.node_x - self.node_x) + abs(target.node_y - self.node_y)
+    def estimate_cost(self, target: Node) -> int:  # calculate heuristic cost
+        return abs(target.node_x - self.node_x) + abs(target.node_y - self.node_y)
 
+    def __lt__(self, other):
+        return self.g_cost < other.g_cost
+
+
+def get_start_end(nodes: list[list[Node]]) -> tuple[Node,Node]:
+    not_walls: list[Node] = []
+    for row in range(ROWS):
+        for col in range(COLS):
+            if not nodes[row][col].is_wall:
+                not_walls.append(nodes[row][col])
+    start = random.choice(not_walls)
+    not_walls.remove(start)
+    end = random.choice(not_walls)
+    return start, end
