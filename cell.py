@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
-from typing import Union
+from dataclasses import dataclass
 from constants import CELL_SIZE, WHITE, YELLOW, GREEN, ROWS, COLS, BLUE, RED
 
 import random
@@ -120,19 +119,6 @@ class Cell:
                 return move_helper(2, 0)
             case 'west':
                 return move_helper(-2, 0)
-
-
-# def get_start_end(maze: MazeType):
-#     lst_of_visited = []
-#     for row in range(ROWS):
-#         for col in range(COLS):
-#             if maze[row][col].visited:
-#                 lst_of_visited.append(maze[row][col])
-#     start = random.choice(lst_of_visited)
-#     lst_of_visited.remove(start)
-#     end = random.choice(lst_of_visited)
-#     return start, end
-
 
 # Type annotation
 MazeType = list[list[Cell]]
