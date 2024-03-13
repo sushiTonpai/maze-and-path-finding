@@ -28,14 +28,21 @@ class MazeAndPathRunner:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                # clear screen
-                self.screen.fill(BLACK)
-                # regenerate maze when press r
-                self.maze_grid[:] = Maze.maze_generator()
-                self.generating = True
-                self.start_point = False
-                self.end_point = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    # clear screen
+                    self.screen.fill(BLACK)
+                    # regenerate maze when press r
+                    self.maze_grid[:] = Maze.maze_generator()
+                    self.generating = True
+                    self.start_point = False
+                    self.end_point = False
+                if event.key == pygame.K_s:
+                    path = self.node_grid.find_path()
+                    for point in path[:-1]:
+                        point.draw_path(screen=self.screen)
+                        pygame.display.flip()
+                    print(f"Path found{path}")
 
     def visualize_maze(self):
         if self.generating:

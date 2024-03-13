@@ -38,7 +38,7 @@ class Astar:
         heapq.heappush(open_list, self.start_node)
         while len(open_list) > 0:
             current_node = heapq.heappop(open_list)
-            searched_list. append(current_node)
+            searched_list.append(current_node)
 
             # If the goal is reached, return the constructed path
             if current_node == self.goal_node:

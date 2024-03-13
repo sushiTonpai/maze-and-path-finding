@@ -7,7 +7,7 @@ import pygame
 from pygame import Surface
 
 from cell import Cell
-from constants import COLS, ROWS, BLUE, CELL_SIZE, RED
+from constants import COLS, ROWS, BLUE, CELL_SIZE, RED, YELLOW
 
 
 @dataclass
@@ -53,6 +53,14 @@ class Node:
         y = self.node_y * CELL_SIZE
 
         pygame.draw.circle(screen, RED, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
+
+    def draw_path(self, screen: Surface):
+        """
+        Draw path on maze
+        """
+        x = self.node_x * CELL_SIZE
+        y = self.node_y * CELL_SIZE
+        pygame.draw.rect(screen, YELLOW, (x, y, CELL_SIZE, CELL_SIZE))
 
     def __lt__(self, other):
         return self.g_cost < other.g_cost

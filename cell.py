@@ -60,17 +60,6 @@ class Cell:
             pygame.draw.line(screen, GREEN, (x, y), (x, y + CELL_SIZE), int(1 / 10 * CELL_SIZE))
             # RIGHT WALL
             pygame.draw.line(screen, GREEN, (x + CELL_SIZE, y), (x + CELL_SIZE, y + CELL_SIZE), int(1 / 10 * CELL_SIZE))
-        if self.visited and self.is_start:
-            """
-            draw blue circle at starting point
-            """
-            pygame.draw.circle(screen, BLUE, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
-
-        if self.visited and self.is_goal:
-            """
-            draw red circle at starting point
-            """
-            pygame.draw.circle(screen, RED, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
 
     # find allow neighbour cells
     def neighbours_directions(self, maze: MazeType) -> list[str]:
