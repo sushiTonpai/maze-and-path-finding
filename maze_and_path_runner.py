@@ -21,7 +21,7 @@ class MazeAndPathRunner:
     start_point: bool
     end_point: bool
     maze_visualization_enable: bool
-    node_grid: Optional[Astar]
+    node_grid: Optional[Astar] = None
 
     def events_handler(self, events: list[Event]):
         for event in events:

@@ -120,5 +120,6 @@ class Cell:
             case 'west':
                 return move_helper(-2, 0)
 
+
 # Type annotation
 MazeType = list[list[Cell]]
