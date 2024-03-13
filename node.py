@@ -3,8 +3,11 @@ from dataclasses import dataclass
 import random
 from typing import Optional
 
+import pygame
+from pygame import Surface
+
 from cell import Cell
-from constants import COLS, ROWS
+from constants import COLS, ROWS, BLUE, CELL_SIZE, RED
 
 
 @dataclass
@@ -20,7 +23,7 @@ class Node:
 
     node_x: int
     node_y: int
-    parents:Optional[Node]= None
+    parents: Optional[Node] = None
     is_wall: bool = False
     g_cost: float = float('inf')
     h_cost: int = 0
@@ -39,11 +42,23 @@ class Node:
     def estimate_cost(self, target: Node) -> int:  # calculate heuristic cost
         return abs(target.node_x - self.node_x) + abs(target.node_y - self.node_y)
 
+    def draw_start(self, screen: Surface):
+        x = self.node_x * CELL_SIZE
+        y = self.node_y * CELL_SIZE
+
+        pygame.draw.circle(screen, BLUE, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
+
+    def draw_goal(self, screen: Surface):
+        x = self.node_x * CELL_SIZE
+        y = self.node_y * CELL_SIZE
+
+        pygame.draw.circle(screen, RED, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
+
     def __lt__(self, other):
         return self.g_cost < other.g_cost
 
 
-def get_start_end(nodes: list[list[Node]]) -> tuple[Node,Node]:
+def get_start_end(nodes: list[list[Node]]) -> tuple[Node, Node]:
     not_walls: list[Node] = []
     for row in range(ROWS):
         for col in range(COLS):
