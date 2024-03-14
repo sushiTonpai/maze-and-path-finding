@@ -1,3 +1,4 @@
 pip
-pygame
+pygame~=2.5.2
 numpy
+pytest~=8.1.1

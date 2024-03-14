@@ -1,7 +1,7 @@
 import pygame
 from maze_and_path_runner import MazeAndPathRunner
 from maze import Maze
-from constants import WIDTH, HEIGHT, COLS, ROWS, BLACK, clock
+from constants import WIDTH, HEIGHT, BLACK, clock
 
 
 def main(
@@ -36,4 +36,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main(maze_visualization_enable=True)
+    main(maze_visualization_enable=False)

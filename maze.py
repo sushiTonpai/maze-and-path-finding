@@ -16,7 +16,7 @@ class Maze:
 
     @classmethod
     def maze_init(cls) -> 'Maze':
-        maze = [[Cell(row, col) for col in range(COLS)] for row in range(ROWS)]
+        maze = [[Cell(x=row, y=col) for col in range(COLS)] for row in range(ROWS)]  # maze[x][y] -> Cell(x = x, y = y)
         current_cell = maze[0][0]
         stack = [current_cell]
         current_cell.visited = True

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Union
 from constants import CELL_SIZE, WHITE, YELLOW, GREEN, ROWS, COLS, BLUE, RED
 
 import random
@@ -23,6 +22,17 @@ walk_to_neighbor is function that return walkable cell with path taken
 
 @dataclass
 class Cell:
+    """
+    Cell class represents cell in maze
+
+    Attributes:
+        x (int): x coordinate of the cell
+        y (int): y coordinate of the cell
+        visited (bool): whether cell is visited or not
+        searching (bool): whether cell is searching/ most front cell
+        is_start (bool): whether cell is starting cell
+        is_goal (bool): whether cell is end goal cell
+    """
     x: int
     y: int
     visited: bool = False
@@ -50,17 +60,6 @@ class Cell:
             pygame.draw.line(screen, GREEN, (x, y), (x, y + CELL_SIZE), int(1 / 10 * CELL_SIZE))
             # RIGHT WALL
             pygame.draw.line(screen, GREEN, (x + CELL_SIZE, y), (x + CELL_SIZE, y + CELL_SIZE), int(1 / 10 * CELL_SIZE))
-        if self.visited and self.is_start:
-            """
-            draw blue circle at starting point
-            """
-            pygame.draw.circle(screen, BLUE, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
-
-        if self.visited and self.is_goal:
-            """
-            draw red circle at starting point
-            """
-            pygame.draw.circle(screen, RED, (x + (0.5 * CELL_SIZE), y + (0.5 * CELL_SIZE)), 1 / 4 * CELL_SIZE)
 
     # find allow neighbour cells
     def neighbours_directions(self, maze: MazeType) -> list[str]:
@@ -109,18 +108,6 @@ class Cell:
                 return move_helper(2, 0)
             case 'west':
                 return move_helper(-2, 0)
-
-
-def get_start_end(maze: MazeType):
-    lst_of_visited = []
-    for row in range(ROWS):
-        for col in range(COLS):
-            if maze[row][col].visited:
-                lst_of_visited.append(maze[row][col])
-    start = random.choice(lst_of_visited)
-    lst_of_visited.remove(start)
-    end = random.choice(lst_of_visited)
-    return start, end
 
 
 # Type annotation

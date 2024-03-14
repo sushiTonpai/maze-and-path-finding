@@ -2,7 +2,7 @@ import pygame
 
 # Define constants
 WIDTH, HEIGHT = 800, 800
-CELL_SIZE = 40
+CELL_SIZE = 14
 ROWS, COLS = HEIGHT // CELL_SIZE, WIDTH // CELL_SIZE
 
 # Define colors
