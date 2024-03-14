@@ -42,7 +42,7 @@ class MazeAndPathRunner:
                     for point in path[:-1]:
                         point.draw_path(screen=self.screen)
                         pygame.display.flip()
-                    print(f"Path found{path}")
+                    # print(f"Path found{path}")
 
     def visualize_maze(self):
         if self.generating:
