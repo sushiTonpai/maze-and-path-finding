@@ -9,7 +9,7 @@ from pygame.event import Event
 from astar import Astar
 from node import Node
 from cell import MazeType
-from constants import BLACK, ROWS
+from constants import BLACK, ROWS, clock
 from maze import Maze
 
 
@@ -38,10 +38,10 @@ class MazeAndPathRunner:
                     self.start_point = False
                     self.end_point = False
                 if event.key == pygame.K_s:
-                    path = self.node_grid.find_path()
+                    path = self.node_grid.find_path(screen=self.screen)
                     for point in path[:-1]:
                         point.draw_path(screen=self.screen)
-                        pygame.display.flip()
+                    pygame.display.flip()
                     # print(f"Path found{path}")
 
     def visualize_maze(self):

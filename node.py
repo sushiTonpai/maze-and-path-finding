@@ -7,7 +7,7 @@ import pygame
 from pygame import Surface
 
 from cell import Cell
-from constants import COLS, ROWS, BLUE, CELL_SIZE, RED, YELLOW
+from constants import COLS, ROWS, BLUE, CELL_SIZE, RED, YELLOW, GREEN
 
 
 @dataclass
@@ -60,10 +60,18 @@ class Node:
         """
         x = self.node_x * CELL_SIZE
         y = self.node_y * CELL_SIZE
+        pygame.draw.rect(screen, GREEN, (x, y, CELL_SIZE, CELL_SIZE))
+
+    def draw_insearch(self, screen: Surface):
+        """
+        Draw searching blocks
+        """
+        x = self.node_x * CELL_SIZE
+        y = self.node_y * CELL_SIZE
         pygame.draw.rect(screen, YELLOW, (x, y, CELL_SIZE, CELL_SIZE))
 
     def __lt__(self, other):
-        return self.g_cost < other.g_cost
+        return self.f_cost < other.f_cost
 
 
 def get_start_end(nodes: list[list[Node]]) -> tuple[Node, Node]:

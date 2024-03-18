@@ -1,7 +1,10 @@
 import heapq
 from dataclasses import dataclass
 
-from constants import COLS, ROWS
+import pygame
+from pygame import Surface
+
+from constants import COLS, ROWS, clock
 from maze import Maze
 from node import Node, get_start_end, NodeType
 
@@ -28,7 +31,7 @@ class Astar:
                    start_node=start_node,
                    goal_node=goal_node, )
 
-    def find_path(self) -> list[Node]:
+    def find_path(self, screen: Surface) -> list[Node]:
         """
         Perform the A* search algorithm to find the path from start to goal nodes.
         """
@@ -38,11 +41,12 @@ class Astar:
         heapq.heappush(open_list, self.start_node)
         while len(open_list) > 0:
             current_node = heapq.heappop(open_list)
-            searched_list.append(current_node)
 
             # If the goal is reached, return the constructed path
             if current_node == self.goal_node:
                 return self.get_path()
+
+            searched_list.append(current_node)
 
             neighbours = self.walkable_neighbours(current_node=current_node)
 
@@ -53,6 +57,7 @@ class Astar:
                 neighbour.parent = current
                 # Add neighbour to open_list if not already present
                 if neighbour not in open_list:
+                    neighbour.h_cost = neighbour.estimate_cost(target=self.goal_node)
                     heapq.heappush(open_list, neighbour)
 
             for neighbour in neighbours:
@@ -61,8 +66,12 @@ class Astar:
                     continue
                 new_g = current_node.g_cost + 1
                 # Update the neighbour's cost if the new cost is lower or if it's not in open_list
-                if new_g < neighbour.g_cost or neighbour not in open_list:
+                if new_g < neighbour.g_cost and neighbour not in open_list:
+                    print(neighbour.g_cost)
                     update_neighbour(current_node, neighbour, new_g)
+                    neighbour.draw_insearch(screen=screen)
+                    clock.tick(30)
+                    pygame.display.flip()
 
         # return empty list if function cannot reach goal node
         return []
