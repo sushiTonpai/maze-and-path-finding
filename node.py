@@ -68,14 +68,16 @@ class Node:
 
 def get_start_end(nodes: list[list[Node]]) -> tuple[Node, Node]:
     not_walls: list[Node] = []
-    for row in range(ROWS):
-        for col in range(COLS):
+    for row in range(len(nodes)):
+        for col in range(len(nodes[0])):
             if not nodes[row][col].is_wall:
                 not_walls.append(nodes[row][col])
-    start = random.choice(not_walls)
-    not_walls.remove(start)
-    end = random.choice(not_walls)
-    return start, end
+    if not_walls:
+        start = random.choice(not_walls)
+        not_walls.remove(start)
+        end = random.choice(not_walls)
+        return start, end
+    return nodes[0][0], nodes[-1][-1]
 
 
 NodeType = list[list[Node]]

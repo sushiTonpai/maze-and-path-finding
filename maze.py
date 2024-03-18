@@ -64,11 +64,9 @@ class Maze:
         maze = my_maze.maze_grid
         current_cell = my_maze.current_cell
         stack = my_maze.stack
-        print('non-visualized maze generator')
         while stack:
             directions = current_cell.neighbours_directions(maze=maze)
             next_cells = current_cell.move(directions=directions, maze=maze)
-            # next_cell, path = current_cell.walk_to_neighbour(maze=maze)
             if next_cells:
                 for cell in reversed(next_cells):
                     cell.visited = True

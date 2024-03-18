@@ -36,4 +36,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main(maze_visualization_enable=False)
+    main(maze_visualization_enable=True)
