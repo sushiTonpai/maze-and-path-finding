@@ -104,13 +104,4 @@ class Astar:
         return path
 
 
-if __name__ == "__main__":
-    # Generate a test maze
-    test_maze = Maze.maze_generator()
 
-    # Initialize A* with nodes from the maze
-    test_nodes = Astar.node_init(maze_grid=test_maze)
-
-    # Perform the A* search and print the resulting path
-    path = Astar.find_path(test_nodes)
-    print("Path:", path)

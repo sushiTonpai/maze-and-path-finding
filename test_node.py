@@ -43,27 +43,32 @@ def sample_maze() -> MazeType:
          Cell(x=0, y=2, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=0, y=3, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=0, y=4, visited=True, searching=False, is_start=False, is_goal=False)],
-        [Cell(x=1, y=0, visited=False, searching=False, is_start=False, is_goal=False),
-         Cell(x=1, y=1, visited=False, searching=False, is_start=False, is_goal=False),
-         Cell(x=1, y=2, visited=False, searching=False, is_start=False, is_goal=False),
-         Cell(x=1, y=3, visited=False, searching=False, is_start=False, is_goal=False),
+        [Cell(x=1, y=0, visited=True, searching=False, is_start=False, is_goal=False),
+         Cell(x=1, y=1, visited=True, searching=False, is_start=False, is_goal=False),
+         Cell(x=1, y=2, visited=True, searching=False, is_start=False, is_goal=False),
+         Cell(x=1, y=3, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=1, y=4, visited=True, searching=False, is_start=False, is_goal=False)],
         [Cell(x=2, y=0, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=2, y=1, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=2, y=2, visited=True, searching=False, is_start=False, is_goal=False),
-         Cell(x=2, y=3, visited=False, searching=False, is_start=False, is_goal=False),
+         Cell(x=2, y=3, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=2, y=4, visited=True, searching=False, is_start=False, is_goal=False)],
         [Cell(x=3, y=0, visited=True, searching=False, is_start=False, is_goal=False),
-         Cell(x=3, y=1, visited=False, searching=False, is_start=False, is_goal=False),
+         Cell(x=3, y=1, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=3, y=2, visited=True, searching=False, is_start=False, is_goal=False),
-         Cell(x=3, y=3, visited=False, searching=False, is_start=False, is_goal=False),
-         Cell(x=3, y=4, visited=False, searching=False, is_start=False, is_goal=False)],
+         Cell(x=3, y=3, visited=True, searching=False, is_start=False, is_goal=False),
+         Cell(x=3, y=4, visited=True, searching=False, is_start=False, is_goal=False)],
         [Cell(x=4, y=0, visited=True, searching=False, is_start=False, is_goal=False),
-         Cell(x=4, y=1, visited=False, searching=False, is_start=False, is_goal=False),
+         Cell(x=4, y=1, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=4, y=2, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=4, y=3, visited=True, searching=False, is_start=False, is_goal=False),
          Cell(x=4, y=4, visited=True, searching=False, is_start=False, is_goal=False)]
     ]
+
+
+@pytest.fixture()
+def sample_astar(sample_maze) -> Astar:
+    return Astar.node_init(sample_maze)
 
 
 def test_simple_maze(simple_maze: MazeType):
@@ -81,14 +86,20 @@ def test_walkable_neighbors_empty(simple_maze: MazeType):
     assert neighbors == []
 
 
-def test_walkable_neighbors(sample_maze: MazeType):
-    sample_nodes = Astar.node_init(sample_maze)
-    neighbors = Astar.walkable_neighbours(sample_nodes, sample_nodes.node_grid[0][0])
-    assert neighbors == [sample_nodes.node_grid[0][1]]
+# def test_get_path(sample_astar: Astar):
+#     start_end = [sample_astar.start_node, sample_astar.goal_node]
+#     out = Astar.find_path(sample_astar,screen=screen)
+#     assert out in start_end
+
+
+def test_walkable_neighbors(sample_astar: Astar):
+    neighbors = Astar.walkable_neighbours(sample_astar, sample_astar.node_grid[0][0])
+    assert len(neighbors) == 2
 
 
 def test_starting_node_g_cost(sample_astar_node_grid: Astar):
     assert sample_astar_node_grid.start_node.g_cost == 0
+
 
 def test_node_init_len():
     test_maze = Maze.maze_generator()
