@@ -39,7 +39,7 @@ class MazeAndPathRunner:
                     self.end_point = False
                 if event.key == pygame.K_s:
                     path = self.node_grid.find_path(screen=self.screen)
-                    for point in path[:-1]:
+                    for point in path[1:-1]:
                         point.draw_path(screen=self.screen)
                     pygame.display.flip()
                     # print(f"Path found{path}")

@@ -127,6 +127,14 @@ def test_start_end_placement_not_blocked(sample_astar_node_grid: Astar):
     assert not start.is_wall and not goal.is_wall
 
 
+def test_maze_generator_and_visualise(sample_screen):
+    maze_test = Maze.maze_init()
+    maze_test.maze_visualise(sample_screen)
+    nodes = Astar.node_init(maze_test.maze_grid)
+    out = Astar.find_path(nodes, screen=sample_screen)
+    assert len(out) > 2
+
+
 def test_calculate_cost(sample_node: Node):
     expected = 7
     got = sample_node.calculate_cost()
