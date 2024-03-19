@@ -67,7 +67,6 @@ class Astar:
                 new_g = current_node.g_cost + 1
                 # Update the neighbour's cost if the new cost is lower or if it's not in open_list
                 if new_g < neighbour.g_cost and neighbour not in open_list:
-                    print(neighbour.g_cost)
                     update_neighbour(current_node, neighbour, new_g)
                     neighbour.draw_insearch(screen=screen)
                     clock.tick(30)
@@ -101,6 +100,7 @@ class Astar:
         while current_node != self.start_node:
             path.insert(0, current_node)
             current_node = current_node.parent
+        path.insert(0, self.start_node)
         return path
 
 

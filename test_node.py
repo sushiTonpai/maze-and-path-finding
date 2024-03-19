@@ -1,7 +1,9 @@
 import random
 from typing import List
 
+import pygame
 import pytest
+from pygame import Surface
 
 from astar import Astar
 from maze import Maze
@@ -20,6 +22,11 @@ def sample_node() -> Node:
         h_cost=4,
         f_cost=5,
     )
+
+
+@pytest.fixture()
+def sample_screen() -> Surface:
+    return pygame.display.set_mode((800, 800))
 
 
 @pytest.fixture()
@@ -86,10 +93,10 @@ def test_walkable_neighbors_empty(simple_maze: MazeType):
     assert neighbors == []
 
 
-# def test_get_path(sample_astar: Astar):
-#     start_end = [sample_astar.start_node, sample_astar.goal_node]
-#     out = Astar.find_path(sample_astar,screen=screen)
-#     assert out in start_end
+def test_get_path(sample_astar_node_grid: Astar, sample_screen: Surface):
+    start_end = [sample_astar_node_grid.start_node, sample_astar_node_grid.goal_node]
+    out = Astar.find_path(sample_astar_node_grid, screen=sample_screen)
+    assert any(node in out for node in start_end)
 
 
 def test_walkable_neighbors(sample_astar: Astar):

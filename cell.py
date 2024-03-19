@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+
+from pygame import Surface
+
 from constants import CELL_SIZE, WHITE, YELLOW, GREEN, ROWS, COLS, BLUE, RED
 
 import random
@@ -40,7 +43,7 @@ class Cell:
     is_start: bool = False
     is_goal: bool = False
 
-    def draw(self, screen):
+    def draw(self, screen: Surface):
         # pixel position of cell = x,y
         x, y = self.x * CELL_SIZE, self.y * CELL_SIZE
 
